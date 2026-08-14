@@ -19,10 +19,12 @@
       </a>
       <nav class="desktop-nav" aria-label="Main navigation">
         <a href="#stay">The stay</a>
+        <a href="#availability">Availability</a>
+        <a href="#pricing">Pricing</a>
         <a href="#around">Around Anaa</a>
         <a href="#story">Our story</a>
       </nav>
-      <a class="button button-small button-dark" href="#book">Check dates <span>↗</span></a>
+      <a class="button button-small button-dark" href="#availability">Check dates <span>↗</span></a>
     </header>
 
     <main>
@@ -62,13 +64,29 @@
         <div class="amenities"><span>2 guests</span><span>61 m² / 657 ft²</span><span>1 bedroom · 1 bathroom</span><span>Free parking</span><span>Free Wi-Fi</span><span>Air conditioning</span></div>
       </section>
 
+      <section class="bentral-section bentral-section-alt" id="availability">
+        <div class="section-wrap">
+          <div class="section-heading section-heading-centered"><div><p class="eyebrow"><span class="eyebrow-line"></span> Check dates</p><h2>See when Anaa<br /><i>is available.</i></h2></div><p class="heading-aside">This calendar is connected to Anaa's live Bentral reservation system.</p></div>
+          <div class="bentral-widget bentral-calendar" data-bentral-widget="calendar" data-bentral-en="https://www.bentral.com/service/embed/calendar.js?uid=5f5449334f44494d&amp;last=true&amp;key=3c27a658790ee9647e0442dbc965a522" data-bentral-sl="https://www.bentral.com/service/embed/calendar.js?uid=5f5449334f44494d&amp;last=true&amp;lang=sl&amp;key=3c27a658790ee9647e0442dbc965a522"></div>
+          <div class="bentral-language" data-bentral-controls="calendar" aria-label="Calendar language"><button type="button" class="bentral-language-button is-active" data-bentral-language="en">English</button><button type="button" class="bentral-language-button" data-bentral-language="sl">Slovenščina</button></div>
+        </div>
+      </section>
+
+      <section class="bentral-section" id="pricing">
+        <div class="section-wrap">
+          <div class="section-heading section-heading-centered"><div><p class="eyebrow"><span class="eyebrow-line"></span> Rates</p><h2>Clear pricing,<br /><i>before you book.</i></h2></div><p class="heading-aside">Seasonal prices and required services are maintained directly in Bentral.</p></div>
+          <div class="bentral-widget bentral-pricelist" data-bentral-widget="pricing" data-bentral-en="https://www.bentral.com/service/embed/price-list.js?uid=5f5449334f44494d&amp;id=5f5451784f515f4e&amp;key=3c27a658790ee9647e0442dbc965a522" data-bentral-sl="https://www.bentral.com/service/embed/price-list.js?uid=5f5449334f44494d&amp;id=5f5451784f515f4e&amp;lang=sl&amp;key=3c27a658790ee9647e0442dbc965a522"></div>
+          <div class="bentral-language" data-bentral-controls="pricing" aria-label="Price list language"><button type="button" class="bentral-language-button is-active" data-bentral-language="en">English</button><button type="button" class="bentral-language-button" data-bentral-language="sl">Slovenščina</button></div>
+        </div>
+      </section>
+
       <section class="location-section" id="around">
         <div class="section-wrap location-grid"><div class="location-copy"><p class="eyebrow"><span class="eyebrow-line"></span> The real location</p><h2>In Radovljica,<br /><i>near the centre.</i></h2><p>Apartment Anaa is at Vurnikov trg 4, 4240 Radovljica. The listing places it about 100 m from the centre; Adventure Mini Golf Panorama is 3.2 km away, Bled Sports Hall 7.3 km away, and Bled Castle about 10 km away.</p><a class="button button-outline" href="https://www.openstreetmap.org/?mlat=46.34426&mlon=14.17417#map=18/46.34426/14.17417" target="_blank" rel="noreferrer">Open in OpenStreetMap <span>↗</span></a></div><div class="map-card"><iframe title="Map showing Apartment Anaa at Vurnikov trg 4, Radovljica" src="https://www.openstreetmap.org/export/embed.html?bbox=14.17150%2C46.34280%2C14.17680%2C46.34570&amp;layer=mapnik&amp;marker=46.34426%2C14.17417"></iframe></div></div>
       </section>
 
       <section class="quote-section" id="story"><div class="quote-mark">“</div><blockquote>Very well furnished apartment, excellent parking and location, pleasant sitting on the balcony.</blockquote><p>— Verified Booking.com guest review · translated from the listing</p></section>
 
-      <section class="booking-section section-wrap" id="book"><div class="booking-card"><div class="booking-copy"><p class="eyebrow eyebrow-light"><span class="eyebrow-line"></span> Book with Anaa</p><h2>Ask us<br /><i>directly.</i></h2><p>Prefer to book direct? Send an enquiry and we’ll confirm availability and the total price personally. The form is ready; the owner’s email and phone can be added when available.</p><div class="booking-perks"><span>✓ No third-party booking fee</span><span>✓ Personal availability check</span><span>✓ Direct communication with the host</span></div><div class="official-links"><a href="https://www.booking.com/hotel/si/apartment-anaa.html" target="_blank" rel="noreferrer">Booking.com ↗</a><a href="https://www.airbnb.com/rooms/1188349334859986153" target="_blank" rel="noreferrer">Airbnb ↗</a></div></div><form class="direct-form" id="direct-form"><div class="form-row"><label>Check in<input type="date" id="direct-checkin" required /></label><label>Check out<input type="date" id="direct-checkout" required /></label></div><div class="form-row"><label>Guests<select id="direct-guests"><option>2 guests</option><option>1 guest</option></select></label><label>Your name<input type="text" id="direct-name" placeholder="Name" required /></label></div><label>Your email<input type="email" id="direct-email" placeholder="you@example.com" required /></label><label>Message <span class="optional">optional</span><textarea id="direct-message" rows="3" placeholder="Anything you’d like us to know?"></textarea></label><button class="button button-light" type="submit">Send direct enquiry <span>↗</span></button><p class="form-note" id="direct-form-note">The enquiry email will be connected once the owner’s email is added.</p></form></div></section>
+      <section class="booking-section section-wrap" id="book"><div class="booking-card"><div class="booking-copy"><p class="eyebrow eyebrow-light"><span class="eyebrow-line"></span> Book with Anaa</p><h2>Make it<br /><i>your stay.</i></h2><p>Choose your dates below for a live price calculation and direct reservation through Bentral. The calendar and booking form use the same availability.</p><div class="booking-perks"><span>✓ Live availability</span><span>✓ Direct reservation with the host</span><span>✓ Clear price calculation</span></div><div class="official-links"><a href="https://www.booking.com/hotel/si/apartment-anaa.html" target="_blank" rel="noreferrer">Booking.com ↗</a><a href="https://www.airbnb.com/rooms/1188349334859986153" target="_blank" rel="noreferrer">Airbnb ↗</a></div></div><div class="bentral-booking-wrap"><div class="bentral-widget bentral-booking" data-bentral-widget="booking" data-bentral-en="https://www.bentral.com/service/embed/booking.js?id=5f5451784f515f4e&amp;width=full&amp;key=3c27a658790ee9647e0442dbc965a522" data-bentral-sl="https://www.bentral.com/service/embed/booking.js?id=5f5451784f515f4e&amp;width=full&amp;lang=sl&amp;key=3c27a658790ee9647e0442dbc965a522"></div><div class="bentral-language bentral-language-dark" data-bentral-controls="booking" aria-label="Booking language"><button type="button" class="bentral-language-button is-active" data-bentral-language="en">English</button><button type="button" class="bentral-language-button" data-bentral-language="sl">Slovenščina</button></div></div></div></section>
     </main>
 
     <footer class="site-footer"><div class="footer-top"><a class="brand brand-footer" href="#top"><span class="brand-mark">A</span><span><strong>Apartment</strong><em>Anaa</em></span></a><p>Vurnikov trg 4<br />4240 Radovljica, Slovenia</p><div class="footer-contact"><a href="https://www.booking.com/hotel/si/apartment-anaa.html" target="_blank" rel="noreferrer">Booking.com ↗</a><a href="https://www.airbnb.com/rooms/1188349334859986153" target="_blank" rel="noreferrer">Airbnb ↗</a></div></div><div class="footer-bottom"><span>© 2026 Apartment Anaa</span><span>Listing photos from Airbnb</span><a href="#top">Back to top ↑</a></div></footer>
