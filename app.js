@@ -7,7 +7,8 @@ const translations = {
     checkDates: 'Check dates',
     heroEyebrow: 'Vurnikov trg 4 · Radovljica',
     heroTitle: 'Your base in<br /><i>Radovljica.</i>',
-    heroIntro: 'A spacious 61 m² one-bedroom apartment for 2 guests, around 100 m from the centre of Radovljica.',
+    heroIntro: 'A spacious 61 m² one-bedroom apartment for 2 guests, around 100 m from the centre of Radovljica — and an ideal base close to Bled, Šobec, the nearby pool and the highway.',
+    locationHighlights: ['Close to Bled', 'Near Šobec', 'Nearby swimming pool', 'Easy highway access'],
     heroCheck: 'Check availability',
     explore: 'Explore the apartment',
     rating: '<strong>Rated 9.8 / 10</strong><br />Based on 11 Booking.com reviews at time of publishing.',
@@ -15,7 +16,7 @@ const translations = {
     caption: 'Living room · listing photo',
     introEyebrow: 'Verified listing details',
     introTitle: 'One apartment.<br /><i>All to yourself.</i>',
-    introBody: 'Apartment Anaa is listed as an entire 61 m² apartment with one bedroom, one bathroom, a fully equipped kitchen, living area, balcony and city or mountain views.',
+    introBody: 'Apartment Anaa is listed as an entire 61 m² apartment with one bedroom, one bathroom, a fully equipped kitchen, living area, balcony and city or mountain views. Its Radovljica location puts you close to Bled and Šobec, with a swimming pool nearby and convenient access to the highway for exploring the region.',
     listing: 'See the listing',
     stayEyebrow: 'The apartment',
     stayTitle: 'Comfortable, practical,<br /><i>and entirely yours.</i>',
@@ -33,8 +34,8 @@ const translations = {
     ratesTitle: 'Clear pricing,<br /><i>before you book.</i>',
     ratesAside: 'Seasonal prices and required services are maintained directly in Bentral.',
     aroundEyebrow: 'The real location',
-    aroundTitle: 'In Radovljica,<br /><i>near the centre.</i>',
-    aroundBody: 'Apartment Anaa is at Vurnikov trg 4, 4240 Radovljica. The listing places it about 100 m from the centre; Adventure Mini Golf Panorama is 3.2 km away, Bled Sports Hall 7.3 km away, and Bled Castle about 10 km away.',
+    aroundTitle: 'In Radovljica,<br /><i>the ideal base.</i>',
+    aroundBody: 'Apartment Anaa is at Vurnikov trg 4, 4240 Radovljica, around 100 m from the centre. You are close to Bled and Šobec, with a nearby swimming pool and quick highway access — an easy starting point for the lake, outdoor adventures and the wider Gorenjska region.',
     maps: 'Open in OpenStreetMap',
     mapTitle: 'Map showing Apartment Anaa at Vurnikov trg 4, Radovljica',
     quote: 'Very well furnished apartment, excellent parking and location, pleasant sitting on the balcony.',
@@ -59,7 +60,8 @@ const translations = {
     checkDates: 'Preveri termine',
     heroEyebrow: 'Vurnikov trg 4 · Radovljica',
     heroTitle: 'Vaša baza v<br /><i>Radovljici.</i>',
-    heroIntro: 'Prostoren 61 m² velik apartma z eno spalnico za 2 gosta, približno 100 m od središča Radovljice.',
+    heroIntro: 'Prostoren 61 m² velik apartma z eno spalnico za 2 gosta, približno 100 m od središča Radovljice — in idealno izhodišče blizu Bleda, Šobca, bližnjega bazena ter avtoceste.',
+    locationHighlights: ['Blizu Bleda', 'V bližini Šobca', 'Bližnji bazen', 'Hiter dostop do avtoceste'],
     heroCheck: 'Preveri razpoložljivost',
     explore: 'Raziščite apartma',
     rating: '<strong>Ocena 9,8 / 10</strong><br />Na podlagi 11 mnenj Booking.com ob objavi.',
@@ -67,7 +69,7 @@ const translations = {
     caption: 'Dnevna soba · fotografija nastanitve',
     introEyebrow: 'Preverjeni podatki nastanitve',
     introTitle: 'En apartma.<br /><i>Popolnoma vaš.</i>',
-    introBody: 'Apartma Anaa je celoten 61 m² velik apartma z eno spalnico, eno kopalnico, popolnoma opremljeno kuhinjo, dnevnim prostorom, balkonom ter pogledom na mesto ali gore.',
+    introBody: 'Apartma Anaa je celoten 61 m² velik apartma z eno spalnico, eno kopalnico, popolnoma opremljeno kuhinjo, dnevnim prostorom, balkonom ter pogledom na mesto ali gore. Njegova lokacija v Radovljici pomeni, da ste blizu Bleda in Šobca, v bližini je bazen, dostop do avtoceste pa je udoben za raziskovanje regije.',
     listing: 'Oglejte si ponudbo',
     stayEyebrow: 'Apartma',
     stayTitle: 'Udoben, praktičen<br /><i>in povsem vaš.</i>',
@@ -85,8 +87,8 @@ const translations = {
     ratesTitle: 'Pregleden cenik,<br /><i>pred rezervacijo.</i>',
     ratesAside: 'Sezonske cene in obvezne storitve se vodijo neposredno v sistemu Bentral.',
     aroundEyebrow: 'Resnična lokacija',
-    aroundTitle: 'V Radovljici,<br /><i>blizu središča.</i>',
-    aroundBody: 'Apartma Anaa se nahaja na Vurnikovem trgu 4, 4240 Radovljica. Po podatkih oglasa je približno 100 m od središča; Adventure Mini Golf Panorama je oddaljen 3,2 km, Športna dvorana Bled 7,3 km, Blejski grad pa približno 10 km.',
+    aroundTitle: 'V Radovljici,<br /><i>idealno izhodišče.</i>',
+    aroundBody: 'Apartma Anaa se nahaja na Vurnikovem trgu 4, 4240 Radovljica, približno 100 m od središča. Blizu ste Bleda in Šobca, v bližini je bazen, do avtoceste pa je dostop hiter — idealno izhodišče za jezero, izlete in raziskovanje Gorenjske.',
     maps: 'Odpri v OpenStreetMap',
     mapTitle: 'Zemljevid apartmaja Anaa na Vurnikovem trgu 4 v Radovljici',
     quote: 'Zelo lepo opremljen apartma, odlično parkirišče in lokacija, prijetno sedenje na balkonu.',
@@ -150,6 +152,7 @@ function applyLanguage(language) {
   setHtml('.hero-copy > .eyebrow', `<span class="eyebrow-line"></span> ${t.heroEyebrow}`);
   setHtml('.hero h1', t.heroTitle);
   setTextList('.hero-intro', [t.heroIntro]);
+  setTextList('.location-highlights span', t.locationHighlights);
   setHtml('.hero-actions .text-link', `${t.explore} <span>↓</span>`);
   setHtml('.hero-note span:last-child', t.rating);
   setHtml('.hero-stamp span', t.stamp);
