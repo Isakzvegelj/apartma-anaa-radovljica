@@ -7,3 +7,5 @@
 .language-toggle{border:1px solid var(--line);background:transparent;color:var(--ink);padding:9px 11px;border-radius:2px;font:inherit;font-size:11px;font-weight:600;letter-spacing:.06em;cursor:pointer;transition:background .2s,color .2s}.language-toggle:hover{background:var(--ink);color:#fff}
 @media(max-width:850px){.language-toggle{margin-left:auto}.site-header>.button-small{flex-shrink:0}}
 @media(max-width:500px){.form-row{grid-template-columns:1fr}.bentral-section{padding:70px 0}.bentral-widget{padding:18px}.bentral-booking{padding:0}.language-toggle{padding:8px 9px}}
+
+:focus-visible{outline:2px solid var(--terracotta);outline-offset:4px}.hero-image img{object-position:center 48%}@media(max-width:500px){.hero-image img{object-position:center 45%}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.button,.image-frame img{transition:none}.image-frame:hover img{transform:none}}
