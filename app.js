@@ -126,8 +126,15 @@ function setHtmlList(selector, values) {
 
 function loadBentralWidget(widget, language) {
   widget.replaceChildren();
+  widget.setAttribute('aria-busy', 'true');
   const script = document.createElement('script');
+  script.async = true;
   script.src = widget.dataset[`bentral${language === 'sl' ? 'Sl' : 'En'}`];
+  script.onload = () => widget.removeAttribute('aria-busy');
+  script.onerror = () => {
+    widget.removeAttribute('aria-busy');
+    widget.innerHTML = '<p class="widget-fallback">The live booking tool is temporarily unavailable. Please use Booking.com or Airbnb below.</p>';
+  };
   widget.appendChild(script);
 }
 
@@ -199,7 +206,8 @@ function applyLanguage(language) {
   setBentralLanguage(language);
 }
 
-const preferredLanguage = localStorage.getItem('anaa-language') || (navigator.language.toLowerCase().startsWith('sl') ? 'sl' : 'en');
+// English is the default site language; visitors can still switch to Slovenian.
+const preferredLanguage = localStorage.getItem('anaa-language') || 'en';
 applyLanguage(preferredLanguage);
 document.querySelector('#language-toggle')?.addEventListener('click', () => {
   applyLanguage(document.documentElement.lang === 'sl' ? 'en' : 'sl');
