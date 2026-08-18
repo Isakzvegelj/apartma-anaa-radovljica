@@ -6,8 +6,8 @@ const translations = {
     nav: ['The stay', 'Availability', 'Pricing', 'Around Anaa', 'Our story'],
     checkDates: 'Check dates',
     heroEyebrow: 'Vurnikov trg 4 · Radovljica',
-    heroTitle: 'Your base in<br /><i>Radovljica.</i>',
-    heroIntro: 'A spacious 61 m² one-bedroom apartment for 2 guests, around 100 m from the centre of Radovljica — and an ideal base close to Bled, Šobec, the nearby pool and the highway.',
+    heroTitle: 'Your base in<br /><i>Radovljica, close to Bled.</i>',
+    heroIntro: 'A spacious 61 m² one-bedroom apartment for 2 guests, around 100 m from the centre of Radovljica — a convenient base for Bled, Šobec, the nearby pool and the highway.',
     locationHighlights: ['Close to Bled', 'Near Šobec', 'Nearby swimming pool', 'Easy highway access'],
     heroCheck: 'Check availability',
     explore: 'Explore the apartment',
@@ -59,8 +59,8 @@ const translations = {
     nav: ['Apartma', 'Razpoložljivost', 'Cenik', 'Okolica Ane', 'Naša zgodba'],
     checkDates: 'Preveri termine',
     heroEyebrow: 'Vurnikov trg 4 · Radovljica',
-    heroTitle: 'Vaša baza v<br /><i>Radovljici.</i>',
-    heroIntro: 'Prostoren 61 m² velik apartma z eno spalnico za 2 gosta, približno 100 m od središča Radovljice — in idealno izhodišče blizu Bleda, Šobca, bližnjega bazena ter avtoceste.',
+    heroTitle: 'Vaša baza v<br /><i>Radovljici, blizu Bleda.</i>',
+    heroIntro: 'Prostoren 61 m² velik apartma z eno spalnico za 2 gosta, približno 100 m od središča Radovljice — priročno izhodišče za Bled, Šobec, bližnji bazen in avtocesto.',
     locationHighlights: ['Blizu Bleda', 'V bližini Šobca', 'Bližnji bazen', 'Hiter dostop do avtoceste'],
     heroCheck: 'Preveri razpoložljivost',
     explore: 'Raziščite apartma',
@@ -127,13 +127,17 @@ function setHtmlList(selector, values) {
 function loadBentralWidget(widget, language) {
   widget.replaceChildren();
   widget.setAttribute('aria-busy', 'true');
+  widget.setAttribute('aria-live', 'polite');
   const script = document.createElement('script');
   script.async = true;
   script.src = widget.dataset[`bentral${language === 'sl' ? 'Sl' : 'En'}`];
   script.onload = () => widget.removeAttribute('aria-busy');
   script.onerror = () => {
     widget.removeAttribute('aria-busy');
-    widget.innerHTML = '<p class="widget-fallback">The live booking tool is temporarily unavailable. Please use Booking.com or Airbnb below.</p>';
+    const fallback = language === 'sl'
+      ? 'Orodje za rezervacije trenutno ni na voljo. Uporabite Booking.com ali Airbnb spodaj.'
+      : 'The live booking tool is temporarily unavailable. Please use Booking.com or Airbnb below.';
+    widget.innerHTML = `<p class="widget-fallback">${fallback}</p>`;
   };
   widget.appendChild(script);
 }
@@ -202,12 +206,13 @@ function applyLanguage(language) {
     toggle.setAttribute('aria-label', t.languageAria);
   }
   document.querySelectorAll('[data-bentral-controls]').forEach((controls) => controls.setAttribute('aria-label', t.widgetLanguage));
-  localStorage.setItem('anaa-language', language);
+  try { localStorage.setItem('anaa-language', language); } catch (error) { /* storage may be blocked */ }
   setBentralLanguage(language);
 }
 
 // English is the default site language; visitors can still switch to Slovenian.
-const preferredLanguage = localStorage.getItem('anaa-language') || 'en';
+let preferredLanguage = 'en';
+try { preferredLanguage = localStorage.getItem('anaa-language') || 'en'; } catch (error) { /* storage may be blocked */ }
 applyLanguage(preferredLanguage);
 document.querySelector('#language-toggle')?.addEventListener('click', () => {
   applyLanguage(document.documentElement.lang === 'sl' ? 'en' : 'sl');

@@ -9,3 +9,7 @@
 @media(max-width:500px){.form-row{grid-template-columns:1fr}.bentral-section{padding:70px 0}.bentral-widget{padding:18px}.bentral-booking{padding:0}.language-toggle{padding:8px 9px}}
 
 .skip-link{position:fixed;top:12px;left:12px;z-index:20;padding:10px 14px;background:var(--ink);color:#fff;transform:translateY(-160%);transition:transform .2s}.skip-link:focus{transform:translateY(0)}:focus-visible{outline:2px solid var(--terracotta);outline-offset:4px}section[id]{scroll-margin-top:24px}.hero-image img{object-position:center 48%}@media(max-width:500px){.hero-image img{object-position:center 45%}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.button,.image-frame img,.skip-link{transition:none}.image-frame:hover img{transform:none}}
+/* Consistent keyboard affordances for controls and project-critical actions. */
+.button,.language-toggle,.bentral-language-button{min-height:44px}
+.button:focus-visible,.language-toggle:focus-visible,.bentral-language-button:focus-visible{outline:3px solid var(--terracotta);outline-offset:3px}
+@media(max-width:500px){.site-header{gap:12px}.site-header>.button-small{white-space:nowrap}.hero-copy{max-width:34rem}}
