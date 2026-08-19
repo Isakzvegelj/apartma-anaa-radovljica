@@ -50,7 +50,9 @@ const translations = {
     backTop: 'Back to top ↑',
     languageButton: 'SL',
     languageAria: 'Switch to Slovenian',
-    widgetLanguage: 'Widget language'
+    widgetLanguage: 'Widget language',
+    skipLink: 'Skip to content',
+    navLabel: 'Main navigation'
   },
   sl: {
     title: 'Apartma Anaa — Radovljica, Slovenija',
@@ -103,7 +105,9 @@ const translations = {
     backTop: 'Na vrh ↑',
     languageButton: 'EN',
     languageAria: 'Preklopi v angleščino',
-    widgetLanguage: 'Jezik pripomočka'
+    widgetLanguage: 'Jezik pripomočka',
+    skipLink: 'Preskoči na vsebino',
+    navLabel: 'Glavno krmarjenje'
   }
 };
 
@@ -125,30 +129,67 @@ function setHtmlList(selector, values) {
 }
 
 function loadBentralWidget(widget, language) {
+  const requestId = String(Number(widget.dataset.bentralRequest || 0) + 1);
+  widget.dataset.bentralRequest = requestId;
+  widget.dataset.bentralLoaded = 'true';
   widget.replaceChildren();
   widget.setAttribute('aria-busy', 'true');
   widget.setAttribute('aria-live', 'polite');
-  const script = document.createElement('script');
-  script.async = true;
-  script.src = widget.dataset[`bentral${language === 'sl' ? 'Sl' : 'En'}`];
-  script.onload = () => widget.removeAttribute('aria-busy');
-  script.onerror = () => {
+  const source = widget.dataset[`bentral${language === 'sl' ? 'Sl' : 'En'}`];
+  const frame = document.createElement('iframe');
+  const widgetType = widget.dataset.bentralWidget;
+  const titles = {
+    calendar: language === 'sl' ? 'Koledar razpoložljivosti apartmaja Anaa' : 'Apartment Anaa availability calendar',
+    pricing: language === 'sl' ? 'Cenik apartmaja Anaa' : 'Apartment Anaa price list',
+    booking: language === 'sl' ? 'Rezervacijski obrazec apartmaja Anaa' : 'Apartment Anaa booking form'
+  };
+  // Bentral’s legacy .js embed uses document.write(), which is unsafe when loaded asynchronously.
+  // Its paired .html endpoint provides the same iframe content without document.write().
+  frame.src = source.replace(/\.js(?=\?|$)/, '.html');
+  frame.title = titles[widgetType] || 'Apartment Anaa booking information';
+  frame.loading = widgetType === 'calendar' ? 'eager' : 'lazy';
+  frame.referrerPolicy = 'strict-origin-when-cross-origin';
+  frame.addEventListener('load', () => {
+    if (widget.dataset.bentralRequest === requestId) widget.removeAttribute('aria-busy');
+  }, { once: true });
+  frame.addEventListener('error', () => {
+    if (widget.dataset.bentralRequest !== requestId) return;
     widget.removeAttribute('aria-busy');
     const fallback = language === 'sl'
       ? 'Orodje za rezervacije trenutno ni na voljo. Uporabite Booking.com ali Airbnb spodaj.'
       : 'The live booking tool is temporarily unavailable. Please use Booking.com or Airbnb below.';
     widget.innerHTML = `<p class="widget-fallback">${fallback}</p>`;
-  };
-  widget.appendChild(script);
+  }, { once: true });
+  widget.appendChild(frame);
 }
+
+const bentralObserver = 'IntersectionObserver' in window
+  ? new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const widget = entry.target;
+        loadBentralWidget(widget, widget.dataset.bentralLanguage || 'en');
+        observer.unobserve(widget);
+      });
+    }, { rootMargin: '300px 0px' })
+  : null;
 
 function setBentralLanguage(language) {
   document.querySelectorAll('[data-bentral-widget]').forEach((widget) => {
-    loadBentralWidget(widget, language);
+    widget.dataset.bentralLanguage = language;
     const controls = document.querySelector(`[data-bentral-controls="${widget.dataset.bentralWidget}"]`);
     controls?.querySelectorAll('[data-bentral-language]').forEach((button) => {
-      button.classList.toggle('is-active', button.dataset.bentralLanguage === language);
+      const active = button.dataset.bentralLanguage === language;
+      button.classList.toggle('is-active', active);
+      button.setAttribute('aria-pressed', active ? 'true' : 'false');
     });
+    if (widget.dataset.bentralLoaded === 'true') {
+      loadBentralWidget(widget, language);
+    } else if (bentralObserver) {
+      bentralObserver.observe(widget);
+    } else {
+      loadBentralWidget(widget, language);
+    }
   });
 }
 
@@ -157,6 +198,9 @@ function applyLanguage(language) {
   document.documentElement.lang = language;
   document.title = t.title;
   document.querySelector('meta[name="description"]')?.setAttribute('content', t.description);
+  const skipLink = document.querySelector('.skip-link');
+  if (skipLink) skipLink.textContent = t.skipLink;
+  document.querySelector('.desktop-nav')?.setAttribute('aria-label', t.navLabel);
   setHtml('.brand strong', t.brand);
   setHtmlList('.desktop-nav a', t.nav);
   setTextList('.site-header > .button-small, .hero-actions .button-dark', [t.checkDates, t.heroCheck]);
@@ -214,6 +258,9 @@ function applyLanguage(language) {
 let preferredLanguage = 'en';
 try { preferredLanguage = localStorage.getItem('anaa-language') || 'en'; } catch (error) { /* storage may be blocked */ }
 applyLanguage(preferredLanguage);
+document.querySelectorAll('[data-bentral-language]').forEach((button) => {
+  button.addEventListener('click', () => setBentralLanguage(button.dataset.bentralLanguage));
+});
 document.querySelector('#language-toggle')?.addEventListener('click', () => {
   applyLanguage(document.documentElement.lang === 'sl' ? 'en' : 'sl');
 });
