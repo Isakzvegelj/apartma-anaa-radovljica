@@ -51,6 +51,7 @@ const translations = {
     languageButton: 'SL',
     languageAria: 'Switch to Slovenian',
     widgetLanguage: 'Widget language',
+    widgetHints: ['Scroll inside the widget to see all dates ↓', 'Scroll inside the widget to see all prices ↓', 'Scroll inside the widget to see the full booking form ↓'],
     skipLink: 'Skip to content',
     navLabel: 'Main navigation'
   },
@@ -106,6 +107,7 @@ const translations = {
     languageButton: 'EN',
     languageAria: 'Preklopi v angleščino',
     widgetLanguage: 'Jezik pripomočka',
+    widgetHints: ['Pomaknite se po pripomočku za vse termine ↓', 'Pomaknite se po pripomočku za vse cene ↓', 'Pomaknite se po pripomočku za celoten obrazec ↓'],
     skipLink: 'Preskoči na vsebino',
     navLabel: 'Glavno krmarjenje'
   }
@@ -250,6 +252,7 @@ function applyLanguage(language) {
     toggle.setAttribute('aria-label', t.languageAria);
   }
   document.querySelectorAll('[data-bentral-controls]').forEach((controls) => controls.setAttribute('aria-label', t.widgetLanguage));
+  setTextList('.widget-scroll-hint', t.widgetHints);
   try { localStorage.setItem('anaa-language', language); } catch (error) { /* storage may be blocked */ }
   setBentralLanguage(language);
 }
