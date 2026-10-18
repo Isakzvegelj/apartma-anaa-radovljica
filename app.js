@@ -131,9 +131,12 @@ function setHtmlList(selector, values) {
 }
 
 function loadBentralWidget(widget, language) {
+  // Keep an existing reservation (and calendar position) when its language is unchanged.
+  if (widget.dataset.bentralLoadedLanguage === language && widget.querySelector('iframe')) return;
   const requestId = String(Number(widget.dataset.bentralRequest || 0) + 1);
   widget.dataset.bentralRequest = requestId;
   widget.dataset.bentralLoaded = 'true';
+  widget.dataset.bentralLoadedLanguage = language;
   widget.replaceChildren();
   widget.setAttribute('aria-busy', 'true');
   widget.setAttribute('aria-live', 'polite');
@@ -176,8 +179,9 @@ const bentralObserver = 'IntersectionObserver' in window
     }, { rootMargin: '300px 0px' })
   : null;
 
-function setBentralLanguage(language) {
+function setBentralLanguage(language, widgetType) {
   document.querySelectorAll('[data-bentral-widget]').forEach((widget) => {
+    if (widgetType && widget.dataset.bentralWidget !== widgetType) return;
     widget.dataset.bentralLanguage = language;
     const controls = document.querySelector(`[data-bentral-controls="${widget.dataset.bentralWidget}"]`);
     controls?.querySelectorAll('[data-bentral-language]').forEach((button) => {
@@ -262,7 +266,10 @@ let preferredLanguage = 'en';
 try { preferredLanguage = localStorage.getItem('anaa-language') || 'en'; } catch (error) { /* storage may be blocked */ }
 applyLanguage(preferredLanguage);
 document.querySelectorAll('[data-bentral-language]').forEach((button) => {
-  button.addEventListener('click', () => setBentralLanguage(button.dataset.bentralLanguage));
+  button.addEventListener('click', () => {
+    const widgetType = button.closest('[data-bentral-controls]')?.dataset.bentralControls;
+    if (widgetType) setBentralLanguage(button.dataset.bentralLanguage, widgetType);
+  });
 });
 document.querySelector('#language-toggle')?.addEventListener('click', () => {
   applyLanguage(document.documentElement.lang === 'sl' ? 'en' : 'sl');
