@@ -24,7 +24,7 @@ Production baseline: `144d4ef1ad689f5b84347b02895dae496e47bc76`
 - Read-only price calculation for two adults, 10–17 June 2027: EUR 1,134.10 including EUR 50 cleaning and EUR 35 tourist tax. A two-night June sample correctly reported a seven-night minimum.
 - 10–12 November 2026: provider reports unavailable dates and “Price not defined”. The price-list widget displays seasonal periods May–15 October. Confirm whether winter closure is intentional; if winter bookings are required, the owner must supply/approve rates and open dates in Bentral before launch readiness can be confirmed.
 
-No reservation, guest details, payment or confirmation was submitted. No prices, restrictions, provider identifiers, DNS, production source, or visual design were changed.
+No reservation, guest details, payment or confirmation was submitted. No prices, restrictions, provider identifiers, DNS, or production source were changed. The follow-up photo animations and pricing-height correction are private preview changes pending review.
 
 Evidence and scripts: `/home/isak/projects/repo-optimization-20261018/anaa-launch-evidence/` on VMP. The private preview serves this checkout; do not point it at a different revision without renewing the review.
 
@@ -36,3 +36,21 @@ Evidence and scripts: `/home/isak/projects/repo-optimization-20261018/anaa-launc
 4. Record the deployed commit, deployment result and live checks here and in the project/task handoff.
 
 The older draft PR #1 contains only the booking-state fix and is included in this release. Do not merge it again after this complete release lands.
+
+## Follow-up: photo motion, full price list and domain options
+
+Owner request: animate some images, find a domain, and fix the cropped price list shown in the phone screenshot.
+
+- Listing photos now have a single subtle zoom/fade entrance when they enter the viewport: four seconds for the hero and 1.4 seconds for feature photos. Original photos are retained; there are no generated assets or new dependencies. Reduced-motion preferences disable the effect, including when enabled during viewing.
+- The price-list iframe now consumes Bentral's existing height messages and includes its full rates, surcharges, cleaning/tax rows and explanatory notes. Messages must have the expected format and come from the current pricing frame at the exact Bentral origin. Language changes and viewport changes receive fresh heights. The obsolete instruction to scroll within the price list has been replaced in English and Slovenian.
+- Private preview remains https://vmp.tail8cd004.ts.net:8486/. Production is unchanged; these visual changes require owner review before publication.
+
+Domain recommendation: **apartmentanaa.com** for international guests; **apartmaanaa.si** as a Slovenian alternative or redirect. Both match the existing listing's Anaa spelling. Authoritative registry RDAP checks on 23 October 2026 returned HTTP 404 (no registration record) for both names; this suggests availability but does not reserve a name or guarantee registrar checkout. stayanaa.com and anaaradovljica.com also returned no registration record.
+
+Registry checks:
+- https://rdap.verisign.com/com/v1/domain/apartmentanaa.com
+- https://rdap.register.si/domain/apartmaanaa.si
+
+Telekom Slovenije's published annual registration prices checked on 23 October 2026: .com EUR 17.99; .si EUR 13.99, including VAT. Source: https://www.telekom.si/poslovni/it-in-oblacne-storitve/storitve-v-oblaku/domene . Final checkout and renewal prices must be confirmed before purchase. No domain was bought, and no DNS or canonical URL was changed.
+
+Follow-up evidence: `price-motion-check.json`, `price-full-chromium-390.png` and `domains-20261023.json` in the existing evidence folder. Responsive Chromium checks cover 320/390/768/1440 px and both pricing languages. A Safari/WebKit run could not start because the host lacks its shared-library dependencies; actual iPhone verification remains with the owner preview.

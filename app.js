@@ -51,7 +51,7 @@ const translations = {
     languageButton: 'SL',
     languageAria: 'Switch to Slovenian',
     widgetLanguage: 'Widget language',
-    widgetHints: ['Scroll inside the widget to see all dates ↓', 'Scroll inside the widget to see all prices ↓', 'Scroll inside the widget to see the full booking form ↓'],
+    widgetHints: ['Scroll inside the widget to see all dates ↓', 'Seasonal rates and mandatory services', 'Scroll inside the widget to see the full booking form ↓'],
     skipLink: 'Skip to content',
     navLabel: 'Main navigation'
   },
@@ -107,7 +107,7 @@ const translations = {
     languageButton: 'EN',
     languageAria: 'Preklopi v angleščino',
     widgetLanguage: 'Jezik pripomočka',
-    widgetHints: ['Pomaknite se po pripomočku za vse termine ↓', 'Pomaknite se po pripomočku za vse cene ↓', 'Pomaknite se po pripomočku za celoten obrazec ↓'],
+    widgetHints: ['Pomaknite se po pripomočku za vse termine ↓', 'Sezonske cene in obvezne storitve', 'Pomaknite se po pripomočku za celoten obrazec ↓'],
     skipLink: 'Preskoči na vsebino',
     navLabel: 'Glavno krmarjenje'
   }
@@ -129,6 +129,19 @@ function setHtmlList(selector, values) {
     if (values[index] !== undefined) element.innerHTML = values[index];
   });
 }
+
+// Bentral reports its content height as "<frame hash>_<height>".
+// Only the current price-list frame may resize itself.
+window.addEventListener('message', (event) => {
+  if (event.origin !== 'https://www.bentral.com' || typeof event.data !== 'string') return;
+  const match = /^[a-f0-9]{32}_(\d{1,5})$/.exec(event.data);
+  if (!match) return;
+  const height = Number(match[1]);
+  if (height < 1 || height > 20000) return;
+  const frame = document.querySelector('[data-bentral-widget="pricing"] iframe');
+  if (!frame || frame.contentWindow !== event.source) return;
+  frame.style.height = `${height + 30}px`;
+});
 
 function loadBentralWidget(widget, language) {
   // Keep an existing reservation (and calendar position) when its language is unchanged.
@@ -275,3 +288,35 @@ document.querySelectorAll('[data-bentral-language]').forEach((button) => {
 document.querySelector('#language-toggle')?.addEventListener('click', () => {
   applyLanguage(document.documentElement.lang === 'sl' ? 'en' : 'sl');
 });
+
+// A single gentle entrance for each real listing photo, including on touch devices.
+// Photos remain visible if animation APIs are unavailable or motion is reduced.
+const reducedPhotoMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+if ('IntersectionObserver' in window && 'animate' in Element.prototype && !reducedPhotoMotion.matches) {
+  const photoAnimations = new Set();
+  const photoObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      const image = entry.target.querySelector('img');
+      if (image) {
+        const animation = image.animate([
+          { transform: 'scale(1.045)', opacity: 0.78 },
+          { transform: 'scale(1)', opacity: 1 }
+        ], {
+          duration: entry.target.classList.contains('hero-image') ? 4000 : 1400,
+          easing: 'cubic-bezier(.2,.65,.3,1)'
+        });
+        photoAnimations.add(animation);
+        animation.addEventListener('finish', () => photoAnimations.delete(animation), { once: true });
+      }
+      observer.unobserve(entry.target);
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.image-frame').forEach((photo) => photoObserver.observe(photo));
+  reducedPhotoMotion.addEventListener('change', (event) => {
+    if (!event.matches) return;
+    photoObserver.disconnect();
+    photoAnimations.forEach((animation) => animation.cancel());
+    photoAnimations.clear();
+  });
+}
