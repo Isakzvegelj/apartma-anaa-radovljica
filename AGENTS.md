@@ -12,7 +12,7 @@ Apartment Anaa is a small single-page static hospitality website for a 61 m² on
 This is a dependency-free static site: do not introduce a framework or build step for ordinary changes. Keep content truthful to the verified listing. Preserve the existing editorial visual style, semantic HTML, responsive behavior, accessible labels, and external-link security attributes.
 
 ## Validation and deployment
-Run from `/Users/isakzvegelj/ana`:
+Run from the repository root:
 - `node --check app.js`
 - `git diff --check`
 - Preview locally with `python3 -m http.server 4173`.

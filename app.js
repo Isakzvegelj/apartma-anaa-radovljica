@@ -200,7 +200,8 @@ function setBentralLanguage(language, widgetType) {
 }
 
 function applyLanguage(language) {
-  const t = translations[language] || translations.en;
+  language = language === 'sl' ? 'sl' : 'en';
+  const t = translations[language];
   document.documentElement.lang = language;
   document.title = t.title;
   document.querySelector('meta[name="description"]')?.setAttribute('content', t.description);
